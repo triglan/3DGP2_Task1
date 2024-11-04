@@ -19,13 +19,14 @@ void Framework::Init() {
 	CreateCBVResource(Device);
 
 	// 카메라 초기 설정(완전 초기값)
-	camera.Move(XMFLOAT3(0.0, 0.0, -40.0));
-	camera.SetOffset(XMFLOAT3(0.0f, 0.0f, 0.0f));
+	camera.Move(XMFLOAT3(0.0, 0.0, 0.0));
+	camera.SetOffset(XMFLOAT3(5.0f, 5.0f, -10.0f));
 	camera.SetViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 1.0f);
 	camera.SetScissorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	camera.SetTimeLag(0.0f);
+	camera.SetTimeLag(0.1f);
 	camera.InitStaticMatrix();
-	camera.SetCameraMode(CamMode::MODE1);
+	camera.SetCameraMode(CamMode::TRACK_MODE);
+	
 
 	CmdList->Close();
 	ID3D12CommandList* CmdLists[] = { CmdList };

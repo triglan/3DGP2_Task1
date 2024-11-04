@@ -2,7 +2,9 @@
 #include "MouseUtil.h"
 
 #include "Control.h"
+#include "enemy.h"
 #include "Terrain.h"
+#include "CameraController.h"
 
 // 해당 cpp파일과 h파일은 특정한 모드를 실행하고, 해당 모드에 존재하는 객체들을 컨트롤하기 위한 파일이다.
 // 반드시 cpp, h파일로 분리되어있어야 하며, 각 모드에 따라 네임스페이스로 구분되어야한다.
@@ -18,8 +20,12 @@ void Mode1::Start() {
 	// 게임 화면에서는 배경을 회색으로 변경
 	SetBackgroundColor(0.3, 0.31, 0.3);
 	// 필요한 객체 추가
-	scene.AddObject(new Control, "test_object", LAYER_1);
-	scene.AddObject(new Terrain, "terrain", LAYER_1);
+	scene.AddObject(new CameraController, "cam_controller", LAYER_1);
+	scene.AddObject(new Control, "control", LAYER_1);
+	scene.AddObject(new Enemy, "enemy", LAYER_1);
+	for (int i = 0; i < 25; ++i)
+		scene.AddObject(new Terrain(i / 5 * 120 - 360, i % 5 * 120), "terrain", LAYER_1);
+	//scene.AddObject(new Terrain, "terrain", LAYER_1);
 	// scene에 컨트롤러 및 모드 소멸자 등록
 	RegisterController();
 
@@ -34,11 +40,11 @@ void Mode1::Destructor() {
 void Mode1::KeyboardController(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam) {
 	// esc 누를 시 프로그램 종료
 	if (nMessageID == WM_KEYDOWN && wParam == VK_ESCAPE)
-		// 프로그램을 종료하는 Scene 멤버 함수
-		//scene.Exit();
+		scene.SwitchMode(HomeMode::Start);//Home모드로 이동
 
 	// 객체로 키보드 입력
-	scene.InputKey(hWnd, nMessageID, wParam, lParam, "test_object");
+	scene.InputKey(hWnd, nMessageID, wParam, lParam, "control");
+	scene.InputKey(hWnd, nMessageID, wParam, lParam, "cam_controller");
 }
 
 //  마우스 모션을 지정된 객체 포인터로 전달한다
@@ -47,13 +53,15 @@ void Mode1::MouseMotionController(HWND hWnd) {
 	mouse.UpdateMousePosition(hWnd);
 
 	// 객체로 마우스 모션 입력
-	scene.InputMouseMotion(hWnd, "test_object");
+	scene.InputMouseMotion(hWnd, "control");
+	scene.InputMouseMotion(hWnd, "cam_controller");
 }
 
 // 마우스 버튼 클릭 이벤트를 지정된 객체 포인터로 전달한다
 void Mode1::MouseController(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam) {
 	// 객체로 마우스 입력
-	scene.InputMouse(hWnd, nMessageID, wParam, lParam, "test_object");
+	scene.InputMouse(hWnd, nMessageID, wParam, lParam, "control");
+	scene.InputMouse(hWnd, nMessageID, wParam, lParam, "cam_controller");
 }
 
 // scene에 컨트롤러 및 모드 소멸자 등록

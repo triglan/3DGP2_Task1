@@ -229,6 +229,12 @@
     <ClInclude Include="Guide.h">
       <Filter>[3]____________[ Game Object ]\[1] [ CustomObject ]</Filter>
     </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>[3]____________[ Game Object ]\[1] [ CustomObject ]</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>[3]____________[ Game Object ]\[1] [ CustomObject ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">

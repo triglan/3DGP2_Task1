@@ -11,9 +11,10 @@ class Control : public GameObject {
 private:
 	bool MoveForward{}, MoveBackward{}, MoveRight{}, MoveLeft{};
 	float WingRotation{ 90 };
-	XMFLOAT3 HeliRotation{ 0, -90, 0};
-	XMFLOAT3 Tilt{0, 0, 90};
-
+	XMFLOAT3 HeliRotation{ 0, 0, 0};
+	XMFLOAT3 Tilt{0, 0, 0};
+	bool ColBack{};
+	
 public:
 	XMFLOAT3 Position{0.0, 0.0, 0.0};
 	XMFLOAT3 Rotation{};
@@ -27,17 +28,26 @@ public:
 
 	OOBB oobb;
 	Range range;
+	//Range GetRange() { return range; }
+	OOBB GetRANGE;
 
 	Vector Vec{};
 
 	Control() {
 		Math::InitVector(Vec);
 		line.SetColor(1.0, 1.0, 1.0);
-		Position.x = -8, Position.z = -15.0;
 	}
 
 	XMFLOAT3 GetUp() {
 		return Vec.Up;
+	}
+
+	XMFLOAT3 GetLook() {
+		return Vec.Look;
+	}
+
+	XMFLOAT3 GetRight() {
+		return Vec.Right;
 	}
 
 	XMFLOAT3 GetPosition() {
@@ -53,15 +63,9 @@ public:
 			float cyDelta = (float)(mouse.CurrentPosition().y - MotionPosition.y) / 5.0f;
 			mouse.UpdateMotionPosition(MotionPosition);
 			
-			// 카메라 회전 업데이트
-			RotationDest.x += cyDelta * 0.01;
-			RotationDest.y += cxDelta * 0.01;
-
 			//// 헬기 회전 업데이트
-			HeliRotation.x += cyDelta * 0.01;
-			HeliRotation.y += cyDelta * 0.01;
-
-			//HeliRotation.y += cxDelta * 0.1f;
+			HeliRotation.x += cyDelta;
+			HeliRotation.y += cxDelta;
 		}
 	}
 
@@ -69,22 +73,6 @@ public:
 		switch (nMessageID) {
 		case WM_KEYDOWN:
 			switch (wParam) {
-			case VK_DOWN:
-				if (GunAlpha > 0.0)
-					GunAlpha -= 0.1;
-				break;
-
-			case VK_UP:
-				if (GunAlpha < 1.0)
-					GunAlpha += 0.1;
-				break;
-
-			case VK_SPACE:
-				if (!UseLight)
-					UseLight = true;
-				else
-					UseLight = false;
-				break;
 			case 'W': MoveForward = true; break;
 			case 'A': MoveLeft = true; break;
 			case 'S': MoveBackward = true; break;
@@ -119,38 +107,32 @@ public:
 	}
 
 	void Update(float FT) {
-		//카메라 이동
+
+
+		//Move
 		if (MoveForward) {
-			camera.MoveForwardWithoutHeight(FT * 40);
-			Position.z += FT * 40;
+			Position.x += Vec.Look.x * FT * 40;
+			Position.y += Vec.Look.y * FT * 40;
+			Position.z += Vec.Look.z * FT * 40;
 		}
-		if (MoveBackward) {
-			camera.MoveForwardWithoutHeight(-FT * 40);
-			Position.z -= FT * 40;
+		if (MoveBackward || ColBack) {
+			Position.x -= Vec.Look.x * FT * 40;
+			Position.y -= Vec.Look.y * FT * 40;
+			Position.z -= Vec.Look.z * FT * 40;
 		}
 		if (MoveRight) {
-			camera.MoveStrafeWithoutHeight(FT * 40);
-			Position.x += FT * 40;
+			Position.x += Vec.Right.x * FT * 40;
+			Position.y += Vec.Right.y * FT * 40;
+			Position.z += Vec.Right.z * FT * 40;
 		}
 		if (MoveLeft) {
-			camera.MoveStrafeWithoutHeight(-FT * 40);
-			Position.x -= FT * 40;
+			Position.x -= Vec.Right.x * FT * 40;
+			Position.y -= Vec.Right.y * FT * 40;
+			Position.z -= Vec.Right.z * FT * 40;
 		}
-
-		//카메라 회전
-		Rotation.x = std::lerp(Rotation.x, RotationDest.x, FT * 15);
-		Rotation.y = std::lerp(Rotation.y, RotationDest.y, FT * 15);
-
-		
-		//카메라
-		//camera.Move(Position.x - 8, Position.y, Position.z - 20);
-		//camera.Rotate(Rotation.x, Rotation.y, 0.0);
-
 		//날개 회전
 		WingRotation += FT * 2000;
-
-		std::cout << Position.x << Position.y << Position.z << std::endl;
-		std::cout << camera.GetPosition().x << camera.GetPosition().y << camera.GetPosition().z << std::endl << std::endl;
+		
 	}
 
 	void Render(CommandList CmdList) {
@@ -162,31 +144,35 @@ public:
 
 		Transform::Rotate(TranslateMatrix, Tilt.x, HeliRotation.y, Tilt.z);
 		Transform::Rotate(TranslateMatrix, HeliRotation.x, 0.0, 0.0);
+		Transform::Rotate(TranslateMatrix, 0.0, 0.0, HeliRotation.z);
 
-		FlipTexture(CmdList, FLIP_TYPE_H);
-		BindTexture(CmdList, HelicopterTex);
-		RenderMesh(CmdList, HelicopterBodyMesh, HelicopterTex, ObjectShader, GunAlpha);
+		FlipTexture(CmdList, FLIP_TYPE_V);
+		RenderMesh(CmdList, HelicopterBodyMesh, HelicopterTex, ObjectShader);
 
 		//헬기 머리
-		Transform::Rotate(TranslateMatrix, 0.0, 0, 90.0);
-		Transform::Move(TranslateMatrix, 0.0, -1.0, 0.0);
+		Transform::Move(TranslateMatrix, 0.0, 2.0, 0.0);
 		Transform::Rotate(TranslateMatrix, 0.0, WingRotation, 0.0);
-		RenderMesh(CmdList, HelicopterHeadMesh, HelicopterTex, ObjectShader, GunAlpha);
+		RenderMesh(CmdList, HelicopterHeadMesh, HelicopterTex, ObjectShader);
+
+		Math::UpdateVector(Vec, HeliRotation.x, HeliRotation.y, HeliRotation.z);
 
 
+		//스카이박스
+		InitMatrix(CmdList, RENDER_TYPE_PERS);
+		Transform::Scale(ScaleMatrix, 500, 500, 500);
+		RenderMesh(CmdList, SkyboxMesh, SkyboxTex, ObjectShader, 1.0f);
 
 		// 바운드 스페어 출력
-		//range.Update(Position, 0.3);
+		range.Update(Position, 10);
+		static int i = 0;
+		ColBack = false;
+		if (auto enemy_object = scene.Find("enemy"); enemy_object) {
+			if (range.CheckCollision(enemy_object->GetRange())) {
+				ColBack = true;
+				std::cout << i << std::endl;
+			}
+		}
 		//range.Render(CmdList);
-
-		// 이미지 출력
-		//InitMatrix(CmdList, RENDER_TYPE_IMAGE);
-		//Transform::Scale(ScaleMatrix, 0.5, 0.5, 1.0);
-		//Transform::Move(TranslateMatrix, -0.5, -0.5, 0.0);
-		//RenderMesh(CmdList, ImagePannel, WoodTex, ObjectShader);
-
-		// 중앙선 출력
-		//line.Draw(CmdList, 0.0, 0.0, mouse.x , mouse.y, 0.01);
 
 
 	}

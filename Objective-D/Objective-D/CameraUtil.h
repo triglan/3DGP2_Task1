@@ -29,12 +29,12 @@ protected:
 	D3D12_RECT						ScissorRect{};
 
 private:
-	CamMode Mode{};
 
 	// 활성화 시 초기 행렬이 쉐이더에 전송된다.
 	bool StaticMode{};
 
 public:
+	CamMode Mode{};
 	D3D12_VIEWPORT					Viewport{};
 	XMFLOAT4X4						ViewMatrix{};
 	XMFLOAT4X4						ProjectionMatrix{};

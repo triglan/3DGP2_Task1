@@ -51,8 +51,8 @@ void CreateMeshResource(ID3D12Device* Device, ID3D12GraphicsCommandList* CmdList
 	////////////////////////////////
 
 	// Çï¸®ÄßÅÍ
-	HelicopterBodyMesh = new Mesh(Device, CmdList, "Resources//Models//helicopter_body.bin", MESH_TYPE_BIN);
-	HelicopterHeadMesh = new Mesh(Device, CmdList, "Resources//Models//helicopter_wing.bin", MESH_TYPE_BIN);
+	HelicopterBodyMesh = new Mesh(Device, CmdList, "Resources//Models//GunShip.bin", MESH_TYPE_BIN);
+	HelicopterHeadMesh = new Mesh(Device, CmdList, "Resources//Models//Rotor.bin", MESH_TYPE_BIN);
 
 	// ÁöÇü
 	TerrainMesh = new Mesh(Device, CmdList, "Resources//Models//terrain.bin", MESH_TYPE_BIN);
@@ -62,7 +62,7 @@ void CreateTextureResource(ID3D12Device* Device, ID3D12GraphicsCommandList* CmdL
 	////////////////////////////////
 	// guide
 	LineTex = new Texture(Device, CmdList, L"Resources//SystemResources//Textures//line_tex.png", TEXTURE_TYPE_WIC);
-	GuideTex = new Texture(Device, CmdList, L"Resources//Image//guide2.png", TEXTURE_TYPE_WIC);
+	GuideTex = new Texture(Device, CmdList, L"Resources//Image//guide.png", TEXTURE_TYPE_WIC);
 	////////////////////////////////
 
 	TerrainTex = new Texture(Device, CmdList, L"Resources//Image//grass.jpg", TEXTURE_TYPE_WIC);

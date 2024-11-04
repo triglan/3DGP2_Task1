@@ -7,9 +7,13 @@
 // 예) 카메라 추적 대상 변경, 카메라 시점 변경 등
 void Camera::Update(float FT) {
 	switch (Mode) {
-	case CamMode::MODE1:
-		if (auto helicopter = scene.Find("Control"); helicopter)
+	case CamMode::TRACK_MODE:
+		if (auto helicopter = scene.Find("control"); helicopter) {
 			TrackWithOffset(helicopter->GetPosition(), helicopter->GetUp(), helicopter->GetRight(), helicopter->GetLook(), XMFLOAT3(5.0, 2.0, 0.0), FT);
+			//Track(helicopter->GetPosition(), helicopter->GetUp(), helicopter->GetRight(), helicopter->GetLook(),FT);
+			//std::cout << GetOffset().x << "  y : " << GetOffset().y << "  z :  " << GetOffset().z << std::endl;
+			//std::cout << camera.GetPosition().x << "  y : " << camera.GetPosition().y << "  z :  " << camera.GetPosition().z << std::endl;
+		}
 		break;
 	}
 }
@@ -26,7 +30,7 @@ Camera::Camera() {
 	Right = XMFLOAT3(1.0f, 0.0f, 0.0f);
 	Look = XMFLOAT3(0.0f, 0.0f, 1.0f);
 	Up = XMFLOAT3(0.0f, 1.0f, 0.0f);
-	Offset = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	Offset = XMFLOAT3(5.0, 2.0, -20.0);
 	LookAt = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 	MovingDelay = 0.0f;
@@ -289,7 +293,7 @@ void Camera::Track(XMFLOAT3& ObjectPosition, XMFLOAT3& UpVec, XMFLOAT3& RightVec
 }
 
 // 동작은 Track과 동일하나, 시점 Offset을 설정할 수 있다.
-void Camera::TrackWithOffset(XMFLOAT3& ObjectPosition, XMFLOAT3& UpVec, XMFLOAT3& RightVec, XMFLOAT3& LookVec, XMFLOAT3& Offset, float fTimeElapsed) {
+void Camera::TrackWithOffset(XMFLOAT3& ObjectPosition, XMFLOAT3& UpVec, XMFLOAT3& RightVec, XMFLOAT3& LookVec, XMFLOAT3& OffsetValue, float fTimeElapsed) {
 	XMFLOAT4X4 RotateMatrix = Mat4::Identity();
 
 	XMFLOAT3 UpVector = UpVec;
@@ -327,15 +331,10 @@ void Camera::TrackWithOffset(XMFLOAT3& ObjectPosition, XMFLOAT3& UpVec, XMFLOAT3
 	// 로컬 좌표계에서 LookAtPosition 조정
 	XMFLOAT3 LookAtPosition = ObjectPosition;
 
-	// 로컬 좌표계를 기준으로 x축(오른쪽), y축(위쪽), z축(앞쪽)으로 오프셋 적용
-	float OffsetX = Offset.x;  // 오른쪽으로 이동
-	float OffsetY = Offset.y;   // 위쪽으로 이동
-	float OffsetZ = Offset.z;   // 앞뒤로 이동
-
 	// 로컬 좌표계를 기준으로 오프셋 적용
-	LookAtPosition = Vec3::Add(LookAtPosition, Vec3::Scale(RightVec, OffsetX));
-	LookAtPosition = Vec3::Add(LookAtPosition, Vec3::Scale(UpVec, OffsetY));
-	LookAtPosition = Vec3::Add(LookAtPosition, Vec3::Scale(LookVec, OffsetZ));
+	LookAtPosition = Vec3::Add(LookAtPosition, Vec3::Scale(RightVec, OffsetValue.x));
+	LookAtPosition = Vec3::Add(LookAtPosition, Vec3::Scale(UpVec, OffsetValue.y));
+	LookAtPosition = Vec3::Add(LookAtPosition, Vec3::Scale(LookVec, OffsetValue.z));
 
 	SetLookAt(LookAtPosition, UpVec);
 }

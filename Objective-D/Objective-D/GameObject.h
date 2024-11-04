@@ -30,7 +30,7 @@ public:
 	const char* ObjectTag{};
 	bool DeleteMark{};
 
-	void InitMatrix(ID3D12GraphicsCommandList* CmdList, int RenderTypeFlag=RENDER_TYPE_PERS);
+	void InitMatrix(ID3D12GraphicsCommandList* CmdList, int RenderTypeFlag = RENDER_TYPE_PERS);
 	void SetColor(XMFLOAT3 Color);
 	void SetColor(float R, float G, float B);
 	void MoveStrafe(XMFLOAT3& Position, XMFLOAT3 Right, float Distance);
@@ -38,7 +38,7 @@ public:
 	void MoveUp(XMFLOAT3& Position, XMFLOAT3 Up, float Distance);
 	void BindTexture(ID3D12GraphicsCommandList* CmdList, Texture* TexturePtr);
 	void UseShader(ID3D12GraphicsCommandList* CmdList, Shader* ShaderPtr, bool DepthTest);
-	void RenderMesh(ID3D12GraphicsCommandList* CmdList, Mesh* MeshPtr, Texture* TexturePtr, Shader* ShaderPtr, float Alpha=1.0, bool DepthTestFlag=true);
+	void RenderMesh(ID3D12GraphicsCommandList* CmdList, Mesh* MeshPtr, Texture* TexturePtr, Shader* ShaderPtr, float Alpha = 1.0, bool DepthTestFlag = true);
 	void FlipTexture(ID3D12GraphicsCommandList* CmdList, int FlipType);
 	void DisableLight(ID3D12GraphicsCommandList* CmdList);
 	void EnableLight(ID3D12GraphicsCommandList* CmdList);
@@ -67,6 +67,8 @@ public:
 	virtual Mesh* GetObjectMesh() { return {}; }
 	virtual XMFLOAT3 GetPosition() { return {}; }
 	virtual OOBB GetOOBB() { return {}; }
+	virtual OOBB GetAABB() { return {}; }
+	virtual Range GetRange() { return {}; }
 	virtual XMFLOAT3 GetUp() { return {}; }
 	virtual XMFLOAT3 GetRight() { return {}; }
 	virtual XMFLOAT3 GetLook() { return {}; }

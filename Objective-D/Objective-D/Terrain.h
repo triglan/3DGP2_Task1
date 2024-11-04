@@ -8,9 +8,9 @@
 
 class Terrain : public GameObject {
 public:
-	Terrain() {
+	Terrain(int x, int z) {
 		// 터레인 정보를 터레인 충돌처리 유틸에 전달한다.
-		Transform::Move(TranslateMatrix, 0.0, -50.0, 70.0);
+		Transform::Move(TranslateMatrix, x, -50.0, z);
 		Transform::Scale(ScaleMatrix, 30.0, 30.0, 30.0);
 		terrainUtil.InputData(TranslateMatrix, RotateMatrix, ScaleMatrix, TerrainMesh);
 	}
@@ -22,10 +22,11 @@ public:
 		camera.SetToDefaultMode();
 		SetColor(0.0, 0.0, 0.0);
 
-		BindTexture(CmdList, TerrainTex);
-		UseShader(CmdList, ObjectShader, true);
-		RenderMesh(CmdList, TerrainMesh, TerrainTex, ObjectShader, 1.0f, true);
+		RenderMesh(CmdList, TerrainMesh, TerrainTex, ObjectShader);
+
 
 		terrainUtil.InputData(TranslateMatrix, RotateMatrix, ScaleMatrix, TerrainMesh);
+
+
 	}
 };
