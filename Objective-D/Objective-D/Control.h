@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "LineBrush.h"
+#include "Mode0.h"
 
 class Control : public GameObject {
 private:
@@ -88,6 +89,9 @@ public:
 			case 'A': MoveLeft = true; break;
 			case 'S': MoveBackward = true; break;
 			case 'D': MoveRight = true; break;
+			case VK_ESCAPE:// 탈출 누를 시 플레이 모드로 전환
+				scene.SwitchMode(HomeMode::Start);
+				break;
 			}
 			break;
 

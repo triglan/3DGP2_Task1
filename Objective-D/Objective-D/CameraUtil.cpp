@@ -1,12 +1,15 @@
 #include "CameraUtil.h"
 #include "RootConstants.h"
 #include "RootConstantUtil.h"
+#include "Scene.h"
 
 // Config.h 에서 작성한 모드에 따라 카메라가 다르게 동작하도록 작성할 수 있다.
 // 예) 카메라 추적 대상 변경, 카메라 시점 변경 등
 void Camera::Update(float FT) {
 	switch (Mode) {
 	case CamMode::MODE1:
+		if (auto helicopter = scene.Find("Control"); helicopter)
+			TrackWithOffset(helicopter->GetPosition(), helicopter->GetUp(), helicopter->GetRight(), helicopter->GetLook(), XMFLOAT3(5.0, 2.0, 0.0), FT);
 		break;
 	}
 }

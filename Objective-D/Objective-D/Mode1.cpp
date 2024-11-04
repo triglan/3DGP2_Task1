@@ -35,7 +35,7 @@ void Mode1::KeyboardController(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM
 	// esc 누를 시 프로그램 종료
 	if (nMessageID == WM_KEYDOWN && wParam == VK_ESCAPE)
 		// 프로그램을 종료하는 Scene 멤버 함수
-		scene.Exit();
+		//scene.Exit();
 
 	// 객체로 키보드 입력
 	scene.InputKey(hWnd, nMessageID, wParam, lParam, "test_object");
