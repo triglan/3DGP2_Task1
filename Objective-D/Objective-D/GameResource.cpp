@@ -60,7 +60,7 @@ void CreateMeshResource(ID3D12Device* Device, ID3D12GraphicsCommandList* CmdList
 
 void CreateTextureResource(ID3D12Device* Device, ID3D12GraphicsCommandList* CmdList) {
 	////////////////////////////////
-	// help
+	// guide
 	LineTex = new Texture(Device, CmdList, L"Resources//SystemResources//Textures//line_tex.png", TEXTURE_TYPE_WIC);
 	GuideTex = new Texture(Device, CmdList, L"Resources//Image//guide.png", TEXTURE_TYPE_WIC);
 	////////////////////////////////

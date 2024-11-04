@@ -25,7 +25,7 @@ extern Mesh* BoundingSphereMesh;
 
 // 커스텀 매쉬 및 텍스처
 extern Mesh* HelicopterBodyMesh, * HelicopterHeadMesh, * TerrainMesh;
-extern Texture* HelicopterTex, * WoodTex, * SkyboxTex, * TerrainTex;
+extern Texture* HelicopterTex, * WoodTex, * SkyboxTex, * TerrainTex, * GuideTex;
 
 void CreateShaderResource(ID3D12RootSignature* RootSignature, ID3D12Device* Device, ID3D12GraphicsCommandList* CmdList);
 void CreateMeshResource(ID3D12Device* Device, ID3D12GraphicsCommandList* CmdList);
