@@ -170,7 +170,7 @@ public:
 		RenderMesh(CmdList, HelicopterHeadMesh, HelicopterTex, ObjectShader, GunAlpha);
 
 		//메뉴 띄우기
-		InitMatrix(CmdList, RENDER_TYPE_ORTHO);
+		InitMatrix(CmdList, RENDER_TYPE_IMAGE);//??
 		SetToImageMode(CmdList);
 		// 이미지 종횡비와 동일하게 매쉬의 종횡비를 조정
 		Transform::ImageAspect(ScaleMatrix, 2778, 2202);  // 이미지 크기에 맞게 수정
