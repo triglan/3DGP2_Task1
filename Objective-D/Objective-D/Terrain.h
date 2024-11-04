@@ -11,7 +11,7 @@ public:
 	Terrain() {
 		// 터레인 정보를 터레인 충돌처리 유틸에 전달한다.
 		Transform::Move(TranslateMatrix, 0.0, -50.0, 70.0);
-		Transform::Scale(ScaleMatrix, 40.0, 30.0, 40.0);
+		Transform::Scale(ScaleMatrix, 30.0, 30.0, 30.0);
 		terrainUtil.InputData(TranslateMatrix, RotateMatrix, ScaleMatrix, TerrainMesh);
 	}
 

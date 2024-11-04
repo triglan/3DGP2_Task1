@@ -14,7 +14,7 @@ constexpr int START_UP_HEIGHT = 800;
 constexpr bool START_WITH_FULL_SCREEN = false;
 
 // 최대 프레임 제한을 설정한다. 0으로 설정 시 최대 프레임으로 동작한다.
-constexpr float FRAME_LIMITS = 0;
+constexpr float FRAME_LIMITS = 144;
 
 // 바운드박스 표시 여부를 설정한다.
 #define SHOW_BOUND_BOX

@@ -119,6 +119,9 @@
     <Filter Include="[8]____________[ Template ]">
       <UniqueIdentifier>{85c882ec-0833-4277-a399-b22fdda1154f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]____________[ Game Mode ]\[ Mode0 ]">
+      <UniqueIdentifier>{a15cd9be-0037-48a2-acbc-e7c053053edd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -220,6 +223,12 @@
     <ClInclude Include="Terrain.h">
       <Filter>[3]____________[ Game Object ]\[1] [ CustomObject ]</Filter>
     </ClInclude>
+    <ClInclude Include="Mode0.h">
+      <Filter>[2]____________[ Game Mode ]\[ Mode0 ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Guide.h">
+      <Filter>[3]____________[ Game Object ]\[1] [ CustomObject ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -312,6 +321,9 @@
     </ClCompile>
     <ClCompile Include="DDSTextureLoader12.cpp">
       <Filter>[6]____________[ Objective-D ]\[ DDSTextureLoader12 ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode0.cpp">
+      <Filter>[2]____________[ Game Mode ]\[ Mode0 ]</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

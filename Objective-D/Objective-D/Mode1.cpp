@@ -15,6 +15,8 @@
 // 간편한 모드 코드 작성을 위해 [ Template ] 필터에 템플릿을 만들어 두었으니 복붙한 후 함수 이름과 네임스페이스 이름을 바꾸면 된다.
 
 void Mode1::Start() {
+	// 게임 화면에서는 배경을 회색으로 변경
+	SetBackgroundColor(0.3, 0.31, 0.3);
 	// 필요한 객체 추가
 	scene.AddObject(new Control, "test_object", LAYER_1);
 	scene.AddObject(new Terrain, "terrain", LAYER_1);

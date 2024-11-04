@@ -169,16 +169,6 @@ public:
 		Transform::Rotate(TranslateMatrix, 0.0, WingRotation, 0.0);
 		RenderMesh(CmdList, HelicopterHeadMesh, HelicopterTex, ObjectShader, GunAlpha);
 
-		//메뉴 띄우기
-		InitMatrix(CmdList, RENDER_TYPE_IMAGE);//??
-		SetToImageMode(CmdList);
-		// 이미지 종횡비와 동일하게 매쉬의 종횡비를 조정
-		Transform::ImageAspect(ScaleMatrix, 2778, 2202);  // 이미지 크기에 맞게 수정
-		Transform::Scale(ScaleMatrix, 1.0, 1.0, 1.0);   // 스케일링 값 조정 가능
-		// 텍스처 바인딩 (MyImageTex를 사용하여 PNG 이미지 출력)
-		BindTexture(CmdList, GuideTex);
-		RenderMesh(CmdList, HelicopterHeadMesh, GuideTex, ObjectShader, GunAlpha);
-
 
 
 		// 바운드 스페어 출력

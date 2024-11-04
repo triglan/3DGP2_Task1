@@ -62,7 +62,7 @@ void CreateTextureResource(ID3D12Device* Device, ID3D12GraphicsCommandList* CmdL
 	////////////////////////////////
 	// guide
 	LineTex = new Texture(Device, CmdList, L"Resources//SystemResources//Textures//line_tex.png", TEXTURE_TYPE_WIC);
-	GuideTex = new Texture(Device, CmdList, L"Resources//Image//guide.png", TEXTURE_TYPE_WIC);
+	GuideTex = new Texture(Device, CmdList, L"Resources//Image//guide2.png", TEXTURE_TYPE_WIC);
 	////////////////////////////////
 
 	TerrainTex = new Texture(Device, CmdList, L"Resources//Image//grass.jpg", TEXTURE_TYPE_WIC);
